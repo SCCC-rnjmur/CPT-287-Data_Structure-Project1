@@ -15,24 +15,14 @@ public class Movie {
 	private Date receivedDate;
 	private String recDate;
 	private String movieStatus;
-	private enum status{
-		RECEIVED, RELEASED
-	}
 	
-	//Arraylist and scanner
-	ArrayList<String> Movie = new ArrayList<String>();
+	//scanner
 	Scanner scnr = new Scanner (System.in);
 	
 	//Constructors
 	//Default constructor
 	public Movie() {};
-	
-	/*public Movie(String movieTitle, Date releaseDate, String description, Date receivedDate) {
-		this.movieTitle = movieTitle;
-		this.releaseDate = releaseDate;
-		this.description = description;
-		this.receivedDate = recievedDate;
-	}**/
+
 	
 	//Setters and getters
 	public String getMovieTitle() {return this.movieTitle;}
@@ -44,6 +34,7 @@ public class Movie {
 	public Date getReceivedDate() {return this.receivedDate;}
 	public void setReceivedDate(Date receivedDate) {this.receivedDate = receivedDate;}
 	
+	
 	//Methods
 	public void addMovie() throws Exception {
 		System.out.println("Enter movie title:");
@@ -53,12 +44,10 @@ public class Movie {
 		releaseDate = new SimpleDateFormat("MM/dd/yyyy").parse(dateRel);
 		System.out.println("Enter description:");
 		description = scnr.next();
-		Movie.add(description);
 		System.out.println("Enter recieved date");
 		System.out.println("Format: MM/dd/yyyy");
 		recDate = scnr.next();
 		receivedDate = new SimpleDateFormat("MM/dd/yyyy").parse(recDate);
-		System.out.println("Enter rec or rel");
 		
 		
 		
@@ -69,23 +58,6 @@ public class Movie {
 		else if (releaseDate.compareTo(receivedDate) < 0) {
 			System.out.print("Invalid release date.");
 		}
-		else {
-			Movie.add(movieTitle);
-			Movie.add(dateRel);
-			dateRel = scnr.next();
-			Movie.add(recDate);
-			Movie.add(movieStatus);
-		}
-		
-		
-	}
-	
-	
-	public void showing() {
-		
-	}
-	
-	public void coming() {
 		
 	}
 	

@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class MovieMenu {
@@ -28,11 +29,14 @@ public class MovieMenu {
 		//System.out.println("8....");
 		
 	}
-	public static void menu(int cmd, Scanner scnr) throws Exception{
-		// String title, description, releaseDate;
+	public static void menu(int cmd, Scanner scnr, ArrayList<Movie> coming, DoubleLinkedList<Movie> showing) throws Exception{
 		String userDate;
 		switch(cmd) {
 		case 1:
+			ListIterator comingIter = coming.listIterator();
+			while(comingIter.hasNext()) {
+				System.out.println(comingIter.next());
+			}
 		// displays movies  <=== displays all movies and their info
 			//Iterator<Movie>
 			//TODO add display movies method
@@ -40,7 +44,7 @@ public class MovieMenu {
 		break;
 		
 		case 2:
-			MovieMenu.addMovie(scnr);
+			addMovie(scnr);
 			
 		break;
 		
@@ -99,30 +103,33 @@ public class MovieMenu {
 		PrintWriter writeOutput = new PrintWriter(outputFile);		
 		
 		while (inputScanner.hasNext()) {
+			String[] movieFromFile = inputScanner.nextLine().split(",");
+			
 			Movie addMovie = new Movie();
-			addMovie.setMovieTitle(inputScanner.next());
-			addMovie.setMovieTitle(inputScanner.next());
+			addMovie.setMovieTitle(movieFromFile[0]);
 			try {
-				addMovie.setReleaseDate(new SimpleDateFormat("MM/dd/yyyy").parse(inputScanner.next()));
+				addMovie.setReleaseDate(new SimpleDateFormat("MM/dd/yyyy").parse(movieFromFile[1]));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			addMovie.setDescription(inputScanner.next());
+			addMovie.setDescription(movieFromFile[2]);
 			try {
-				addMovie.setReceivedDate(new SimpleDateFormat("MM/dd/yyyy").parse(inputScanner.next()));
+				addMovie.setReceivedDate(new SimpleDateFormat("MM/dd/yyyy").parse(movieFromFile[3]));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (inputScanner.next().equalsIgnoreCase(status.RELEASED.toString())) {
+			if (movieFromFile[4].equalsIgnoreCase(status.RELEASED.toString())) {
 				showing.add(addMovie);
 			} else {
 				coming.addLast(addMovie);
 			}
 		}
 	}
-	public void addMovie(Scanner scnr) throws ParseException{
+	
+	
+	public static void addMovie(Scanner scnr) throws ParseException{
 		String movieTitle, description;
 		Date releaseDate, receivedDate;
 		String recDate, dateRel = null;	
@@ -146,11 +153,13 @@ public class MovieMenu {
 		ArrayList<Movie> showing = new ArrayList<Movie>();
 		DoubleLinkedList<Movie> coming = new DoubleLinkedList<Movie>();
 		
+		loadMovieFile(showing, coming);
+		
 		System.out.println("Welcome to MovieMaster8000!");
 		System.out.println("What would you like to do? -press 0 to view menu.");
 		userSelected = scnr.nextInt();
 		
-		loadMovieFile(showing, coming);
+		
 		
 		
 		while (userSelected > -1 && userSelected < 8) {
@@ -158,7 +167,7 @@ public class MovieMenu {
 				MovieMenu.printMenu();
 				userSelected = scnr.nextInt();
 			}
-			menu(userSelected, scnr);
+			menu(userSelected, scnr, showing, coming);
 		}
 	}
 }

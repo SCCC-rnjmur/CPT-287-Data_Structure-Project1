@@ -43,7 +43,7 @@ public class Movie {
 	@Override
 	public String toString() {
 		DateFormat print_dates = new SimpleDateFormat("MM/dd/yyyy");
-		return this.movieTitle + ", " + print_dates.format(releaseDate) + ", " +
-				this.description + ", " + print_dates.format(receivedDate) + ", ";
+		return this.movieTitle + ", " + print_dates.format(this.releaseDate) + ", " +
+				this.description + ", " + print_dates.format(this.receivedDate) + ", ";
 	}
 }

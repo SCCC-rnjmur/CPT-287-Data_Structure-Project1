@@ -92,19 +92,14 @@ public class MovieMenu {
 		break;
 	}
 }
-	public static void loadMovieFile(ArrayList<Movie> showing, DoubleLinkedList<Movie> coming) throws FileNotFoundException {
+	public static void loadMovieFile(ArrayList<Movie> showing, DoubleLinkedList<Movie> coming) throws IOException {
 		int coming_index = 0;
 		int showing_index = 0;
 		
 		// Create file stream to get input file
 		FileInputStream inputFile = new FileInputStream("Movies.txt");
 		// Create scanner to get data from file
-		Scanner inputScanner = new Scanner(inputFile);
-				
-		// Create output file
-		FileOutputStream outputFile = new FileOutputStream("log.txt");
-		// Create print writer to output data to output file
-		PrintWriter writeOutput = new PrintWriter(outputFile);		
+		Scanner inputScanner = new Scanner(inputFile);	
 		
 		while (inputScanner.hasNext()) {
 			String[] movieFromFile = inputScanner.nextLine().split(",");
@@ -130,6 +125,10 @@ public class MovieMenu {
 				coming.addLast(addMovie);
 			}
 		}
+		
+		inputScanner.close();
+		inputFile.close();
+		
 	}
 	
 	

@@ -38,6 +38,15 @@ public class DoubleLinkedList<T> implements Iterable {
 	}
 	
 	// Methods
+	private void sort() {
+		if (numOfNodes == 0) { } // Do Nothing
+		else {
+			for (int i = 0; i < numOfNodes; i++) {
+				
+			}
+		}
+	}
+	
 	public void addFirst(T item) {
 		/**
 		 * Add {item} to the front of the linked list
@@ -207,9 +216,16 @@ public class DoubleLinkedList<T> implements Iterable {
 				} else if (numOfNodes-- == 1) {
 					head = tail = null;
 				} else {
-					current.prev = current.next;
-					current.next.prev = current.prev;
-					current = current.prev;
+					if (current.next == null) {
+						current.prev.next = null;
+						tail = current;
+					} else if (current.prev == null) {
+						current.next.prev = null;
+						head = current;
+					} else {
+						current.prev = current.next;
+						current.next.prev = current.prev;
+					}
 				}
 			}
 

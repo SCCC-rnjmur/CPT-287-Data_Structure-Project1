@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,8 +27,8 @@ public class MovieMenu {
 		System.out.println("1....Display All Movies"); // <--- DONE
 		System.out.println("2....Add a new movie"); // <--- DONE
 		System.out.println("3....Edit Movie Details"); // <--- DONE
-		System.out.println("4....Change Start Showing Date"); // <--- DONE
-		System.out.println("5....Count Coming Soon Movies before a release date");
+		System.out.println("4....Change Start Showing Date"); 
+		System.out.println("5....Count Coming Soon Movies before a release date");// <--- DONE
 		System.out.println("6....Save Changes"); // <--- DONE
 		System.out.println("7....Exit\n"); // <--- DONE
 	}
@@ -36,6 +37,7 @@ public class MovieMenu {
 			throws Exception {
 		String userDate;
 		Scanner inputScanner = new Scanner(System.in);
+		//Date compareReleaseDate = (new SimpleDateFormat("MM/dd/yyyy").parse(userStringReleaseDate)
 		switch (cmd) {
 		case 1:
 			System.out.println("SHOWING NOW");
@@ -106,13 +108,26 @@ public class MovieMenu {
 		case 4:
 			// start showing movies in the theater <=== all movies after x date go from
 			// coming to showing
-			System.out.println("What is the new showing date?");
-			// Movie.changeToShowing(newShowingDate)
+			System.out.println("What is the new showing date (format: MM/DD/YYYY)");
 			userDate = scnr.next();
-			Date newShowingDate = new SimpleDateFormat("MM/dd/yyyy").parse(userDate);
-			// TODO add code passing new date. switch from coming soon list to now showing
-			// list.
-			System.out.println("Movies released after X date: Movie 1... Movie 2");
+			try {
+				Date newShowingDate = new SimpleDateFormat("MM/dd/yyyy").parse(userDate);
+				comingIter = coming.iterator();
+				while (comingIter.hasNext()) {
+					String[] parsingIterator = comingIter.next().toString().split(",");
+					Date comingIterReleaseDate = new SimpleDateFormat("MM/dd/yyyy").parse(parsingIterator[1]);
+					if (comingIterReleaseDate.compareTo(newShowingDate) == 0) {
+						showing.add(new Movie(parsingIterator[0], comingIterReleaseDate, parsingIterator[2],new SimpleDateFormat("MM/dd/yyyy").parse(parsingIterator[3])));
+						comingIter.remove();
+					}
+				}
+			DateFormat dateformat = new SimpleDateFormat("MM-dd-yyyy");
+			System.out.printf("Any movies released on %s are NOW SHOWING.", dateformat.format(newShowingDate));	
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 
 		case 5:

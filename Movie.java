@@ -20,14 +20,14 @@ public class Movie {
 	
 	//Constructors
 	//Default constructor
-	public Movie() {};
+	public Movie() {}
 	
-	/*public Movie(String movieTitle, Date releaseDate, String description, Date receivedDate) {
+	public Movie(String movieTitle, Date releaseDate, String description, Date receivedDate) {
 		this.movieTitle = movieTitle;
 		this.releaseDate = releaseDate;
 		this.description = description;
-		this.receivedDate = recievedDate;
-	}**/
+		this.receivedDate = receivedDate;
+	}
 	
 	//Setters and getters
 	public String getMovieTitle() {return this.movieTitle;}
